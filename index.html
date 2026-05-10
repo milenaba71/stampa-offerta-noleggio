@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
 <meta charset="UTF-8">
@@ -8,28 +8,31 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:Helvetica,Arial,sans-serif;color:#1B2A4A;font-size:9pt;background:#f0f4f8}
 .page{width:210mm;min-height:297mm;background:#fff;margin:0 auto;position:relative;padding-bottom:20mm}
-.header{background:#D6246E;padding:16px 20mm;display:flex;align-items:center;justify-content:space-between}
+.header{background:#D6246E;padding:14px 20mm;display:flex;align-items:center;justify-content:space-between}
 .header-left{display:flex;align-items:center;gap:14px}
-.logo-img{width:50px;height:50px;border-radius:50%}
+.logo-img{width:48px;height:48px;border-radius:50%}
 .company-name{color:#fff;font-size:18pt;font-weight:700}
 .company-sub{color:#fff;font-size:9pt}
-.company-desc{color:#ffcce0;font-size:7pt;margin-top:4px}
+.company-desc{color:#ffcce0;font-size:7pt;margin-top:3px}
 .badge{background:#fff;border-radius:6px;padding:8px 16px;text-align:center}
 .badge-label{font-size:7pt;color:#D6246E;font-weight:700}
 .badge-num{font-size:14pt;font-weight:700;color:#1B2A4A}
-.meta{padding:14px 20mm 0;display:flex;gap:28px}
+.meta-row{padding:12px 20mm 0;display:flex;gap:24px}
 .meta-item .label{font-size:7pt;color:#6B7B8D;text-transform:uppercase}
-.meta-item .value{font-size:9.5pt;font-weight:700;margin-top:2px}
-.client-box{margin:12px 20mm 0;background:#F0F4F8;border-radius:6px;padding:12px 16px;border-left:3px solid #D6246E;display:flex;justify-content:space-between;align-items:center}
-.client-label{font-size:7pt;color:#6B7B8D;text-transform:uppercase}
-.client-name{font-size:11pt;font-weight:700;margin-top:3px}
-.service-label{font-size:7pt;color:#6B7B8D;text-transform:uppercase}
-.service-value{font-size:9.5pt;font-weight:700;margin-top:3px}
-.section{padding:12px 20mm 0}
+.meta-item .value{font-size:9pt;font-weight:700;margin-top:2px}
+.two-cols{margin:10px 20mm 0;display:flex;gap:12px}
+.client-box{flex:1;background:#F0F4F8;border-radius:6px;padding:10px 14px;border-left:3px solid #D6246E}
+.ref-box{flex:0 0 200px;background:#F0F4F8;border-radius:6px;padding:10px 14px;border-left:3px solid #1B2A4A}
+.box-label{font-size:7pt;color:#6B7B8D;text-transform:uppercase}
+.box-value{font-size:10pt;font-weight:700;margin-top:3px}
+.box-sub{font-size:7.5pt;color:#6B7B8D;margin-top:2px}
+.box-line{font-size:7.5pt;margin-top:2px}
+.blank-field{border-bottom:1px solid #D0D8E0;min-width:120px;display:inline-block;margin-left:4px}
+.section{padding:10px 20mm 0}
 .section-title{font-size:9pt;font-weight:700;display:inline-block;border-bottom:2px solid #D6246E;padding-bottom:2px;margin-bottom:8px}
 .dot{display:inline-block;width:6px;height:6px;background:#D6246E;border-radius:50%;margin-right:6px;vertical-align:middle}
 .subject-label{font-size:7pt;color:#6B7B8D;text-transform:uppercase}
-.subject-text{font-size:8.5pt;line-height:1.6;margin-top:4px;white-space:pre-line}
+.subject-text{font-size:8.5pt;line-height:1.5;margin-top:4px;white-space:pre-line}
 table{width:100%;border-collapse:collapse;margin-top:4px}
 thead th{background:#1B2A4A;color:#fff;font-size:6.5pt;padding:5px 6px;text-align:center;font-weight:700}
 thead th:nth-child(2){text-align:left}
@@ -38,30 +41,29 @@ tbody td:nth-child(2){text-align:left}
 tbody tr:nth-child(even){background:#F0F4F8}
 .total-row{background:#E8DCF0 !important;font-weight:700}
 .total-row td{border-top:2px solid #D6246E;font-size:8pt}
-.summary-item{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #E8E8E8;font-size:8pt}
+.summary-item{display:flex;justify-content:space-between;padding:3.5px 0;border-bottom:1px solid #E8E8E8;font-size:7.5pt}
 .summary-item .lbl{color:#6B7B8D}
 .summary-item .val{font-weight:700}
-.totals{text-align:right;padding:10px 20mm 0}
-.totals-line{font-size:10pt;margin-bottom:4px}
-.totals-line .lbl{color:#6B7B8D;margin-right:16px}
-.grand-total{background:#D6246E;color:#fff;border-radius:6px;padding:10px 18px;display:inline-block;margin-top:8px;text-align:center}
-.grand-total .lbl{font-size:8pt;color:#FFB0CC;font-weight:700}
-.grand-total .val{font-size:14pt;font-weight:700;margin-top:2px}
-.notes li{font-size:7.5pt;line-height:2;list-style:none}
+.totals{text-align:right;padding:8px 20mm 0}
+.totals-line{font-size:9pt;margin-bottom:3px}
+.totals-line .lbl{color:#6B7B8D;margin-right:14px}
+.grand-total{background:#D6246E;color:#fff;border-radius:6px;padding:8px 16px;display:inline-block;margin-top:6px;text-align:center}
+.grand-total .lbl{font-size:7pt;color:#FFB0CC;font-weight:700}
+.grand-total .val{font-size:13pt;font-weight:700;margin-top:2px}
+.notes li{font-size:7pt;line-height:1.9;list-style:none}
 .notes li:before{content:"\2022";color:#D6246E;margin-right:8px;font-weight:700}
-.signatures{padding:20px 20mm 0;display:flex;justify-content:space-between}
+.signatures{padding:16px 20mm 0;display:flex;justify-content:space-between}
 .sig-box{width:42%}
 .sig-box .lbl{font-size:7pt;color:#6B7B8D}
-.sig-line{border-top:1px solid #D0D8E0;margin-top:30px;padding-top:3px;font-size:6.5pt;color:#6B7B8D}
+.sig-line{border-top:1px solid #D0D8E0;margin-top:28px;padding-top:3px;font-size:6.5pt;color:#6B7B8D}
 .footer{position:absolute;bottom:0;left:0;right:0}
 .footer-line{border-top:2px solid #D6246E;margin:0 20mm}
 .footer-text{text-align:center;padding:4px 0;font-size:6pt;color:#6B7B8D}
-.footer-bar{background:#D6246E;padding:4px;text-align:center;color:#fff;font-size:5pt;font-weight:700;letter-spacing:2px}
-.controls{text-align:center;padding:20px;background:#f0f4f8}
-.btn{padding:14px 40px;background:#D6246E;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;margin:5px}
+.footer-bar{background:#D6246E;padding:3px;text-align:center;color:#fff;font-size:5pt;font-weight:700;letter-spacing:2px}
+.controls{text-align:center;padding:16px;background:#f0f4f8}
+.btn{padding:12px 36px;background:#D6246E;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;margin:4px}
 .btn:hover{background:#c01e60}
-.btn2{background:#1B2A4A}
-.btn2:hover{background:#0f1a30}
+.btn2{background:#1B2A4A}.btn2:hover{background:#0f1a30}
 .loading{text-align:center;padding:60px 20px;color:#6B7B8D;font-size:14px}
 @media print{.controls{display:none}.page{margin:0;box-shadow:none}body{background:#fff}}
 </style>
@@ -71,8 +73,7 @@ tbody tr:nth-child(even){background:#F0F4F8}
 <script>
 var LOGO="data:image/png;base64,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";
 var params=new URLSearchParams(window.location.search);
-var dp=params.get('data');
-var offer=null;
+var dp=params.get('data');var offer=null;
 if(dp){try{offer=JSON.parse(decodeURIComponent(dp))}catch(e){try{offer=JSON.parse(dp)}catch(e2){}}}
 if(!offer){document.getElementById('app').innerHTML='<div class="controls" style="min-height:100vh;display:flex;align-items:center;justify-content:center"><div><img src="'+LOGO+'" style="width:60px;border-radius:50%;margin-bottom:16px"><h2 style="color:#1B2A4A;margin-bottom:8px">Offerta Noleggio PDF</h2><p style="color:#6B7B8D;margin-bottom:16px">Incolla il JSON:</p><textarea id="ji" style="width:400px;height:200px;border:2px solid #d0d8e0;border-radius:8px;padding:10px;font-size:11px;font-family:monospace"></textarea><br><button class="btn" style="margin-top:10px" onclick="loadJ()">Carica</button></div></div>'}
 else{render(offer)}
@@ -80,32 +81,34 @@ function loadJ(){try{offer=JSON.parse(document.getElementById('ji').value);rende
 function fD(d){if(!d)return'\u2014';try{return new Date(d).toLocaleDateString('it-IT',{day:'2-digit',month:'2-digit',year:'numeric'})}catch(e){return String(d)}}
 function fC(v){var n=parseFloat(v);if(isNaN(n)||n===0)return'\u2014';return new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR'}).format(n)}
 function render(o){
-var righe=o.righe||[];var gR=0;
-var rowsHtml='';
+var righe=o.righe||[];var gR=0;var rowsHtml='';
 righe.forEach(function(r,i){
 var np=r.nr_persone||0,dp=r.dotazione||0,pp=r.prezzo_capo||0,cl=r.costo_lavaggio||0,cs=r.cambi_settimana||0,am=r.ammortamento_mesi||0,tr=r.trasporto||0,sc=r.sconto||0;
 var td=np*dp,cc=td*pp,ra=am>0?cc/am:0,rl=cl*td*cs*4.33,rm=(ra+rl+tr)*(1-sc/100);gR+=rm;
-rowsHtml+='<tr><td style="text-align:center">'+(i+1)+'</td><td>'+((r.descrizione||''))+'</td><td>'+(np||'')+'</td><td>'+(dp||'')+'</td><td>'+(td||'')+'</td><td>'+fC(pp)+'</td><td>'+(cl?fC(cl):'\u2014')+'</td><td>'+(cs||'')+'</td><td>'+(sc?sc+'%':'\u2014')+'</td><td style="font-weight:700">'+(rm?fC(rm):'\u2014')+'</td></tr>';
+rowsHtml+='<tr><td style="text-align:center">'+(i+1)+'</td><td>'+(r.descrizione||'')+'</td><td>'+(np||'')+'</td><td>'+(dp||'')+'</td><td>'+(td||'')+'</td><td>'+fC(pp)+'</td><td>'+(cl?fC(cl):'\u2014')+'</td><td>'+(cs||'')+'</td><td>'+(sc?sc+'%':'\u2014')+'</td><td style="font-weight:700">'+(rm?fC(rm):'\u2014')+'</td></tr>';
 });
 var iva=parseFloat(o.iva)||22;
-var notesHtml='';
-var defaultNotes=['Indumenti con cuciture a barriera.','Servizio include lavaggio, sanificazione e ricondizionamento.','Consegna e ritiro presso la sede del cliente.','Tracciabilit\u00e0 RFID su ogni capo.','Certificazioni: ISO 14644 | EN 340 | IEC 61340.'];
+var notesHtml='';var defaultNotes=['Indumenti confezionati con cuciture a barriera.','Servizio include lavaggio, sanificazione e ricondizionamento.','Consegna e ritiro presso la sede del cliente.','Tracciabilit\u00e0 RFID su ogni capo.','Certificazioni: ISO 14644 | EN 340 | IEC 61340.'];
 if(o.note){o.note.split('\n').forEach(function(l){if(l.trim())defaultNotes.push(l.trim())})}
 defaultNotes.forEach(function(n){notesHtml+='<li>'+n+'</li>'});
-var summaryItems=[['N. Operatori',o.n_operatori||''],['Cambi settimanali/operatore',o.n_cambi||''],['Frequenza lavaggi',o.freq_lavaggi||''],['Frequenza ritiro/consegna',o.freq_ritiro||''],['Costo logistica/servizio',fC(o.costo_logistica||0)],['Cauzione per capo',fC(o.cauzione||0)],['Penale smarrimento',fC(o.penale||0)],['Durata contratto',o.durata||'']];
-var summaryHtml='';summaryItems.forEach(function(it){summaryHtml+='<div class="summary-item"><span class="lbl">'+it[0]+'</span><span class="val">'+it[1]+'</span></div>'});
-document.getElementById('app').innerHTML='<div class="controls"><button class="btn" onclick="window.print()">\ud83d\udda8\ufe0f Stampa / Salva PDF</button><button class="btn btn2" onclick="window.print()">Ctrl+P per stampare</button></div>'+
+var sItems=[['N. Operatori',o.n_operatori||''],['Cambi settimanali/operatore',o.n_cambi||''],['Frequenza lavaggi',o.freq_lavaggi||''],['Frequenza ritiro/consegna',o.freq_ritiro||''],['Costo logistica/servizio',fC(o.costo_logistica||0)],['Cauzione per capo',fC(o.cauzione||0)],['Penale smarrimento',fC(o.penale||0)],['Durata contratto',o.durata||'']];
+var sHtml='';sItems.forEach(function(it){sHtml+='<div class="summary-item"><span class="lbl">'+it[0]+'</span><span class="val">'+it[1]+'</span></div>'});
+var refHtml='';
+if(o.referente_nome){
+refHtml='<div class="ref-box"><div class="box-label">REFERENTE COMMERCIALE</div><div class="box-value">'+o.referente_nome+'</div>'+(o.referente_email?'<div class="box-sub">\u2709 '+o.referente_email+'</div>':'')+'<div class="box-line">\u260e Cell: <span class="blank-field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div></div>';
+}
+document.getElementById('app').innerHTML='<div class="controls"><button class="btn" onclick="window.print()">\ud83d\udda8\ufe0f Stampa / Salva PDF</button><button class="btn btn2" onclick="window.print()">Ctrl+P</button></div>'+
 '<div class="page">'+
 '<div class="header"><div class="header-left"><img class="logo-img" src="'+LOGO+'"><div><div class="company-name">MYCROCLEAN</div><div class="company-sub">ITALIA\u00ae</div><div class="company-desc">Noleggio e lavaggio indumenti | Clean Room</div></div></div><div class="badge"><div class="badge-label">CONTRATTO N\u00b0</div><div class="badge-num">'+(o.numero||'')+'</div></div></div>'+
-'<div class="meta"><div class="meta-item"><div class="label">DATA OFFERTA</div><div class="value">'+fD(o.data)+'</div></div><div class="meta-item"><div class="label">VALIDIT\u00c0</div><div class="value">'+fD(o.validita)+'</div></div><div class="meta-item"><div class="label">DURATA</div><div class="value">'+(o.durata||'')+'</div></div><div class="meta-item"><div class="label">PAGAMENTO</div><div class="value">'+(o.pagamento||'')+'</div></div></div>'+
-'<div class="client-box"><div><div class="client-label">DESTINATARIO</div><div class="client-name">'+(o.cliente||'')+'</div></div><div><div class="service-label">TIPO SERVIZIO</div><div class="service-value">'+(o.tipo_servizio||'')+'</div></div></div>'+
+'<div class="meta-row"><div class="meta-item"><div class="label">DATA OFFERTA</div><div class="value">'+fD(o.data)+'</div></div><div class="meta-item"><div class="label">VALIDIT\u00c0</div><div class="value">'+fD(o.validita)+'</div></div><div class="meta-item"><div class="label">DURATA</div><div class="value">'+(o.durata||'')+'</div></div><div class="meta-item"><div class="label">PAGAMENTO</div><div class="value">'+(o.pagamento||'')+'</div></div></div>'+
+'<div class="two-cols"><div class="client-box"><div class="box-label">DESTINATARIO</div><div class="box-value">'+(o.cliente||'')+'</div><div class="box-sub">'+(o.tipo_servizio||'')+'</div></div>'+refHtml+'</div>'+
 (o.corpo?'<div class="section"><div class="dot"></div><span class="subject-label">OGGETTO</span><div class="subject-text">'+o.corpo+'</div></div>':'')+
 '<div class="section"><table><thead><tr><th>#</th><th>Descrizione</th><th>Pers.</th><th>Dot/p</th><th>Tot</th><th>Prezzo capo</th><th>Lav.\u20ac</th><th>C/sett</th><th>Sc%</th><th>RATA MESE</th></tr></thead><tbody>'+rowsHtml+'<tr class="total-row"><td colspan="8"></td><td>TOTALE</td><td>'+fC(gR)+'</td></tr></tbody></table></div>'+
-'<div class="section"><div class="dot"></div><span class="section-title">RIEPILOGO SERVIZIO NOLEGGIO</span>'+summaryHtml+'</div>'+
+'<div class="section"><div class="dot"></div><span class="section-title">RIEPILOGO SERVIZIO NOLEGGIO</span>'+sHtml+'</div>'+
 '<div class="totals"><div class="totals-line"><span class="lbl">Canone mensile</span><span>'+fC(gR)+'</span></div><div class="totals-line"><span class="lbl">IVA ('+iva+'%)</span><span>'+fC(gR*iva/100)+'</span></div><div class="grand-total"><div class="lbl">CANONE MENSILE TOTALE</div><div class="val">'+fC(gR*(1+iva/100))+'</div></div></div>'+
 '<div class="section"><div class="dot"></div><span class="section-title">NOTE E CONDIZIONI</span><ul class="notes">'+notesHtml+'</ul></div>'+
 '<div class="signatures"><div class="sig-box"><div class="lbl">Per accettazione del fornitore</div><div class="sig-line">Firma e timbro</div></div><div class="sig-box"><div class="lbl">Per accettazione del cliente</div><div class="sig-line">Firma e timbro</div></div></div>'+
-'<div class="footer"><div class="footer-line"></div><div class="footer-text">Mycroclean Italia\u00ae | Noleggio e Lavaggio Indumenti Clean Room | info@mycroclean.it</div><div class="footer-bar">MYCROCLEAN ITALIA\u00ae</div></div>'+
+'<div class="footer"><div class="footer-line"></div><div class="footer-text">Mycroclean Italia\u00ae | Tel. 02 95300368 | info@mycroclean.it | Indumenti Clean Room</div><div class="footer-bar">MYCROCLEAN ITALIA\u00ae</div></div>'+
 '</div>';
 }
 </script>
