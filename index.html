@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mycroclean - Offerta Noleggio PDF</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f4f8;min-height:100vh;display:flex;align-items:center;justify-content:center}
+.card{background:#fff;border-radius:16px;box-shadow:0 8px 32px rgba(27,42,74,0.1);max-width:520px;width:90%;overflow:hidden}
+.hdr{background:#D6246E;padding:24px 28px;display:flex;align-items:center;gap:16px}
+.logo{width:48px;height:48px;border-radius:50%;flex-shrink:0}
+.hdr h1{color:#fff;font-size:18px;font-weight:700}
+.hdr p{color:#ffcce0;font-size:12px;margin-top:2px}
+.body{padding:28px}
+.info{margin-bottom:20px}.info .label{font-size:11px;color:#6b7b8d;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.info .value{font-size:16px;color:#1B2A4A;font-weight:700}.info .sub{font-size:13px;color:#6b7b8d;margin-top:2px}
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:24px}
+.stat{background:#f0f4f8;border-radius:8px;padding:12px;text-align:center}
+.stat .num{font-size:16px;font-weight:700;color:#1B2A4A}.stat .lbl{font-size:9px;color:#6b7b8d;text-transform:uppercase;margin-top:2px}
+.btn{width:100%;padding:14px;background:linear-gradient(135deg,#D6246E,#e84393);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s;margin-bottom:8px}
+.btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(214,36,110,0.35)}
+.btn:disabled{opacity:0.5;cursor:wait}
+.btn2{background:linear-gradient(135deg,#1B2A4A,#2d4a7a);font-size:13px;padding:11px}
+.nodata{text-align:center;padding:30px 20px}.nodata h2{color:#1B2A4A;margin-bottom:8px}
+.nodata p{color:#6b7b8d;font-size:13px}.nodata textarea{width:100%;height:180px;margin-top:14px;border:2px solid #d0d8e0;border-radius:8px;padding:10px;font-size:11px;font-family:monospace}
+.rp{max-height:200px;overflow-y:auto;margin-bottom:16px;border:1px solid #e5e1da;border-radius:8px}
+.rp table{width:100%;border-collapse:collapse;font-size:11px}.rp th{background:#1B2A4A;color:#fff;padding:6px 8px;text-align:left;font-size:10px;position:sticky;top:0}
+.rp td{padding:5px 8px;border-bottom:1px solid #f0f0f0}.rp tr:nth-child(even){background:#f8f8f8}
+</style>
+</head>
+<body>
+<div class="card" id="app">
+<div class="hdr">
+<img class="logo" src="data:image/png;base64,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" alt="M:">
+<div><h1>Offerta Noleggio PDF</h1><p>Mycroclean Italia&reg;</p></div>
+</div>
+<div class="body" id="content"><p style="text-align:center;color:#6b7b8d">Caricamento...</p></div>
+</div>
+<script>
+var LOGO_B64="data:image/png;base64,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";
+(function(){
+var content=document.getElementById('content');
+var params=new URLSearchParams(window.location.search);
+var dp=params.get('data');
+var offer=null;
+if(dp){try{offer=JSON.parse(decodeURIComponent(dp))}catch(e){try{offer=JSON.parse(dp)}catch(e2){}}}
+if(!offer){content.innerHTML='<div class="nodata"><h2>Genera Offerta Noleggio</h2><p>Incolla il JSON:</p><textarea id="ji"></textarea><button class="btn" style="margin-top:10px" onclick="loadJ()">Carica dati</button></div>';return}
+renderOffer(offer);
+window.loadJ=function(){try{offer=JSON.parse(document.getElementById('ji').value);renderOffer(offer)}catch(e){alert('JSON non valido')}};
+function renderOffer(o){
+var righe=o.righe||[];var totR=0;
+righe.forEach(function(r){var td=(r.nr_persone||0)*(r.dotazione||0);var cc=td*(r.prezzo_capo||0);var am=r.ammortamento_mesi||0;var ra=am>0?cc/am:0;var rl=(r.costo_lavaggio||0)*td*(r.cambi_settimana||0)*4.33;var sc=r.sconto||0;r._rata=(ra+rl+(r.trasporto||0))*(1-sc/100);r._td=td;totR+=r._rata});
+var iva=parseFloat(o.iva)||22;
+var h='<div class="info"><div class="label">Contratto</div><div class="value">'+(o.numero||'')+'</div><div class="sub">'+(o.cliente||'')+'</div></div>';
+h+='<div class="stats"><div class="stat"><div class="num">'+righe.length+'</div><div class="lbl">Righe</div></div><div class="stat"><div class="num">\u20ac'+Math.round(totR).toLocaleString()+'</div><div class="lbl">Rata/mese</div></div><div class="stat"><div class="num">\u20ac'+Math.round(totR*(1+iva/100)).toLocaleString()+'</div><div class="lbl">Con IVA</div></div></div>';
+if(righe.length>0){h+='<div class="rp"><table><tr><th>#</th><th>Descrizione</th><th>Tot</th><th>Sc%</th><th>Rata</th></tr>';righe.forEach(function(r,i){h+='<tr><td>'+(i+1)+'</td><td>'+(r.descrizione||'')+'</td><td>'+(r._td||'')+'</td><td>'+(r.sconto?r.sconto+'%':'\u2014')+'</td><td>\u20ac'+r._rata.toFixed(2)+'</td></tr>'});h+='</table></div>'}
+h+='<button class="btn" id="bg" onclick="genPDF()">\ud83d\udcc4 Scarica PDF</button><button class="btn btn2" onclick="genPDF(true)">\ud83d\udc41 Anteprima</button>';
+content.innerHTML=h;window._o=o}
+window.genPDF=function(pv){var b=document.getElementById('bg');if(b){b.disabled=true;b.textContent='Generazione...'}setTimeout(function(){try{makePDF(window._o,pv)}catch(e){alert(e.message)}if(b){b.disabled=false;b.textContent='\ud83d\udcc4 Scarica PDF'}},100)};
+function fD(d){if(!d)return'\u2014';try{return new Date(d).toLocaleDateString('it-IT',{day:'2-digit',month:'2-digit',year:'numeric'})}catch(e){return String(d)}}
+function fC(v){var n=parseFloat(v);if(isNaN(n)||n===0)return'\u2014';return new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR'}).format(n)}
+function makePDF(o,pv){
+var jsPDF=window.jspdf.jsPDF;var doc=new jsPDF({unit:'mm',format:'a4'});
+var W=210,H=297,pn=0;
+var M=[214,36,110],N=[27,42,74],Wh=[255,255,255],D=[27,42,74],Md=[107,123,141],L=[240,244,248],Ln=[208,216,224];
+var logoImg=new Image();logoImg.src=LOGO_B64;
+function hdrBar(){doc.setFillColor(M[0],M[1],M[2]);doc.rect(0,0,W,14,'F');try{doc.addImage(logoImg,'PNG',3,2,10,10)}catch(e){}doc.setTextColor(Wh[0],Wh[1],Wh[2]);doc.setFont('helvetica','bold');doc.setFontSize(9);doc.text('MYCROCLEAN ITALIA\u00ae',16,8);doc.setFont('helvetica','normal');doc.setFontSize(6.5);doc.text('Offerta Noleggio',16,12);pn++;doc.text('Pag. '+pn,W-15,8,{align:'right'})}
+function ftr(){doc.setDrawColor(M[0],M[1],M[2]);doc.setLineWidth(1);doc.line(15,18,W-15,18);doc.setFillColor(M[0],M[1],M[2]);doc.rect(0,0,W,8,'F');doc.setFontSize(6);doc.setTextColor(Md[0],Md[1],Md[2]);doc.text('Mycroclean Italia\u00ae | Noleggio Indumenti Clean Room | info@mycroclean.it',W/2,13,{align:'center'});doc.setTextColor(Wh[0],Wh[1],Wh[2]);doc.setFont('helvetica','bold');doc.setFontSize(5);doc.text('MYCROCLEAN ITALIA\u00ae',W/2,3.5,{align:'center'})}
+function np(){if(pn>0){ftr();doc.addPage()}hdrBar();return H-22}
+// P1 Header
+pn=1;doc.setFillColor(M[0],M[1],M[2]);doc.rect(0,0,W,30,'F');
+try{doc.addImage(logoImg,'PNG',15,5,20,20)}catch(e){}
+doc.setTextColor(Wh[0],Wh[1],Wh[2]);doc.setFont('helvetica','bold');doc.setFontSize(18);doc.text('MYCROCLEAN',40,13);
+doc.setFont('helvetica','normal');doc.setFontSize(10);doc.text('ITALIA\u00ae',40,20);
+doc.setFontSize(7);doc.setTextColor(255,204,224);doc.text('Noleggio e lavaggio indumenti Clean Room',40,26);
+doc.setFillColor(Wh[0],Wh[1],Wh[2]);doc.roundedRect(W-58,5,46,16,2,2,'F');
+doc.setTextColor(M[0],M[1],M[2]);doc.setFont('helvetica','bold');doc.setFontSize(7);doc.text('CONTRATTO N\u00b0',W-35,11,{align:'center'});
+doc.setTextColor(N[0],N[1],N[2]);doc.setFontSize(13);doc.text(String(o.numero||''),W-35,19,{align:'center'});
+var y=38;
+[['DATA',fD(o.data),15],['VALIDIT\u00c0',fD(o.validita),50],['DURATA',o.durata||'',85],['PAGAMENTO',o.pagamento||'',120]].forEach(function(m){
+doc.setFontSize(6.5);doc.setFont('helvetica','normal');doc.setTextColor(Md[0],Md[1],Md[2]);doc.text(m[0],m[2],y);
+doc.setFontSize(9);doc.setFont('helvetica','bold');doc.setTextColor(D[0],D[1],D[2]);doc.text(String(m[1]).substring(0,22),m[2],y+5)});
+y+=14;doc.setFillColor(L[0],L[1],L[2]);doc.roundedRect(15,y-3,W-30,16,2,2,'F');
+doc.setFillColor(M[0],M[1],M[2]);doc.rect(15,y-3,1.5,16,'F');
+doc.setFontSize(6.5);doc.setFont('helvetica','normal');doc.setTextColor(Md[0],Md[1],Md[2]);doc.text('DESTINATARIO',21,y+1);
+doc.setFontSize(11);doc.setFont('helvetica','bold');doc.setTextColor(N[0],N[1],N[2]);
+var clines=doc.splitTextToSize(String(o.cliente||''),80);doc.text(clines[0],21,y+7);
+doc.setFontSize(6.5);doc.setFont('helvetica','normal');doc.setTextColor(Md[0],Md[1],Md[2]);doc.text('SERVIZIO',W/2+15,y+1);
+doc.setFontSize(9);doc.setFont('helvetica','bold');doc.setTextColor(D[0],D[1],D[2]);doc.text(String(o.tipo_servizio||''),W/2+15,y+7);
+y+=20;
+if(o.corpo){doc.setFillColor(M[0],M[1],M[2]);doc.circle(13,y+1,1,'F');doc.setFontSize(6.5);doc.setFont('helvetica','normal');doc.setTextColor(Md[0],Md[1],Md[2]);doc.text('OGGETTO',15,y);y+=4;doc.setFontSize(8.5);doc.setTextColor(D[0],D[1],D[2]);var bl=doc.splitTextToSize(String(o.corpo),W-30);doc.text(bl.slice(0,4),15,y);y+=Math.min(bl.length,4)*3.8+5}
+// Table
+y+=2;doc.setFillColor(N[0],N[1],N[2]);doc.rect(12,y-4,W-24,7,'F');
+doc.setTextColor(Wh[0],Wh[1],Wh[2]);doc.setFontSize(6);doc.setFont('helvetica','bold');
+var cx=[14,20,72,84,96,108,125,141,155,170];
+['#','Descrizione','Pers.','Dot/p','Tot','Pr.capo','Lav.\u20ac','C/sett','Sc%','RATA MESE'].forEach(function(h,i){doc.text(h,cx[i],y)});
+y+=5;var righe=o.righe||[];var gR=0;
+righe.forEach(function(r,idx){
+if(y>H-50){y=np()}
+var np2=r.nr_persone||0,dp=r.dotazione||0,pp=r.prezzo_capo||0,cl=r.costo_lavaggio||0,cs=r.cambi_settimana||0,am=r.ammortamento_mesi||0,tr=r.trasporto||0,sc=r.sconto||0;
+var td=np2*dp,cc=td*pp,ra=am>0?cc/am:0,rl=cl*td*cs*4.33,rm=(ra+rl+tr)*(1-sc/100);gR+=rm;
+if(idx%2===1){doc.setFillColor(L[0],L[1],L[2]);doc.rect(12,y-3.5,W-24,6.5,'F')}
+doc.setTextColor(D[0],D[1],D[2]);doc.setFontSize(6.5);doc.setFont('helvetica','normal');
+doc.text(String(idx+1),16,y,{align:'center'});doc.text((r.descrizione||'').substring(0,30),20,y);
+doc.text(String(np2||''),80,y,{align:'right'});doc.text(String(dp||''),92,y,{align:'right'});
+doc.text(String(td||''),104,y,{align:'right'});doc.text(pp?fC(pp):'\u2014',124,y,{align:'right'});
+doc.text(cl?fC(cl):'\u2014',140,y,{align:'right'});doc.text(cs?String(cs):'',155,y,{align:'right'});
+doc.text(sc?sc+'%':'\u2014',165,y,{align:'right'});
+doc.setFont('helvetica','bold');doc.text(rm?fC(rm):'\u2014',W-14,y,{align:'right'});
+doc.setDrawColor(Ln[0],Ln[1],Ln[2]);doc.setLineWidth(0.2);doc.line(12,y+2,W-12,y+2);y+=6.5});
+doc.setFillColor(230,220,240);doc.rect(12,y-3.5,W-24,7,'F');doc.setDrawColor(M[0],M[1],M[2]);doc.setLineWidth(0.6);doc.line(12,y-3.5,W-12,y-3.5);
+doc.setFont('helvetica','bold');doc.setFontSize(7);doc.setTextColor(D[0],D[1],D[2]);doc.text('TOTALE CANONE MENSILE',130,y,{align:'right'});doc.text(fC(gR),W-14,y,{align:'right'});y+=12;
+// Riepilogo
+if(y>H-75){y=np()}doc.setFillColor(M[0],M[1],M[2]);doc.circle(13,y+1,1,'F');
+doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(N[0],N[1],N[2]);doc.text('RIEPILOGO SERVIZIO',15,y);
+doc.setDrawColor(M[0],M[1],M[2]);doc.setLineWidth(0.6);doc.line(15,y-1.5,60,y-1.5);y+=7;
+[['N. Operatori',o.n_operatori||''],['Cambi settimanali',o.n_cambi||''],['Frequenza lavaggi',o.freq_lavaggi||''],['Frequenza ritiro/consegna',o.freq_ritiro||''],['Costo logistica/servizio',fC(o.costo_logistica||0)],['Cauzione per capo',fC(o.cauzione||0)],['Penale smarrimento',fC(o.penale||0)],['Durata contratto',o.durata||'']].forEach(function(it){
+doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.setTextColor(Md[0],Md[1],Md[2]);doc.text(it[0],15,y);
+doc.setFont('helvetica','bold');doc.setTextColor(D[0],D[1],D[2]);doc.text(String(it[1]),W-15,y,{align:'right'});y+=5;
+doc.setDrawColor(Ln[0],Ln[1],Ln[2]);doc.setLineWidth(0.15);doc.line(15,y-1.5,W-15,y-1.5)});y+=6;
+// Totali
+if(y>H-45){y=np()}var tL=W-68,tR=W-15;var iva=parseFloat(o.iva)||22;
+doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(Md[0],Md[1],Md[2]);doc.text('Canone mensile',tL,y);
+doc.setTextColor(D[0],D[1],D[2]);doc.text(fC(gR),tR,y,{align:'right'});y+=6;
+doc.setTextColor(Md[0],Md[1],Md[2]);doc.text('IVA ('+iva+'%)',tL,y);doc.setTextColor(D[0],D[1],D[2]);doc.text(fC(gR*iva/100),tR,y,{align:'right'});
+y+=4;doc.setDrawColor(M[0],M[1],M[2]);doc.setLineWidth(1.2);doc.line(tL,y,tR,y);y+=7;
+doc.setFillColor(M[0],M[1],M[2]);doc.roundedRect(tL-4,y-5,tR-tL+8,12,2,2,'F');
+doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(255,180,210);doc.text('CANONE MENSILE',tL,y+1);
+doc.setTextColor(Wh[0],Wh[1],Wh[2]);doc.setFontSize(13);doc.text(fC(gR*(1+iva/100)),tR,y+1,{align:'right'});y+=16;
+// Note
+if(y>H-50){y=np()}doc.setFillColor(M[0],M[1],M[2]);doc.circle(13,y+1,1,'F');
+doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(N[0],N[1],N[2]);doc.text('NOTE E CONDIZIONI',15,y);
+doc.setDrawColor(M[0],M[1],M[2]);doc.setLineWidth(0.6);doc.line(15,y-1.5,55,y-1.5);y+=6;
+doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.setTextColor(D[0],D[1],D[2]);
+var notes=['\u2022  Indumenti con cuciture a barriera.','\u2022  Servizio include lavaggio e sanificazione.','\u2022  Consegna e ritiro presso il cliente.','\u2022  Tracciabilit\u00e0 RFID.','\u2022  Certificazioni: ISO 14644 | EN 340.'];
+if(o.note){o.note.split('\n').slice(0,3).forEach(function(l){notes.push('\u2022  '+l.trim())})}
+notes.forEach(function(n){if(y>H-22){y=np()}doc.text(n,15,y);y+=4.2});y+=8;
+// Firme
+if(y>H-40){y=np()}doc.setFontSize(7);doc.setFont('helvetica','normal');doc.setTextColor(Md[0],Md[1],Md[2]);
+doc.text('Per accettazione del fornitore',15,y);doc.text('Per accettazione del cliente',W-80,y);
+doc.setDrawColor(Ln[0],Ln[1],Ln[2]);doc.setLineWidth(0.3);doc.line(15,y+12,78,y+12);doc.line(W-80,y+12,W-15,y+12);
+doc.setFontSize(6.5);doc.text('Firma e timbro',15,y+15);doc.text('Firma e timbro',W-80,y+15);
+ftr();
+var fn='Offerta_Noleggio_'+(o.numero||'N')+'.pdf';
+if(pv){window.open(URL.createObjectURL(doc.output('blob')),'_blank')}else{doc.save(fn)}
+}
+})();
+</script>
+</body>
+</html>
