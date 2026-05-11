@@ -94,7 +94,7 @@ var iva=parseFloat(o.iva)||22;
 var notesHtml='';var defaultNotes=['Indumenti confezionati con cuciture a barriera.','Servizio include lavaggio, sanificazione e ricondizionamento.','Consegna e ritiro presso la sede del cliente.','Tracciabilit\u00e0 RFID su ogni capo.','Certificazioni: ISO 14644 | EN 340 | IEC 61340.'];
 if(o.note){o.note.split('\n').forEach(function(l){if(l.trim())defaultNotes.push(l.trim())})}
 defaultNotes.forEach(function(n){notesHtml+='<li>'+n+'</li>'});
-var sItems=[['N. Operatori',o.n_operatori||''],['Cambi settimanali/operatore',o.n_cambi||''],['Frequenza lavaggi',o.freq_lavaggi||''],['Frequenza ritiro/consegna',o.freq_ritiro||''],['Costo logistica/servizio',fC(o.costo_logistica||0)],['Cauzione per capo',fC(o.cauzione||0)],['Penale smarrimento',fC(o.penale||0)],['Durata contratto',o.durata||'']];
+var sItems=[['N. Operatori',o.n_operatori||''],['Cambi settimanali/operatore',o.n_cambi||''],['Frequenza lavaggi',o.freq_lavaggi||''],['Frequenza ritiro/consegna',o.freq_ritiro||''],['Costo logistica/servizio',fC(o.costo_logistica||0)],['Cauzione per capo',fC(o.cauzione||0)],['Penale smarrimento',o.penale||'\u2014'],['Durata contratto',o.durata||'']];
 var sHtml='';sItems.forEach(function(it){sHtml+='<div class="summary-item"><span class="lbl">'+it[0]+'</span><span class="val">'+it[1]+'</span></div>'});
 var refHtml='';
 if(o.referente_nome){
