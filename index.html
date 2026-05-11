@@ -84,11 +84,11 @@ function loadJ(){try{offer=JSON.parse(document.getElementById('ji').value);rende
 function fD(d){if(!d)return'\u2014';try{return new Date(d).toLocaleDateString('it-IT',{day:'2-digit',month:'2-digit',year:'numeric'})}catch(e){return String(d)}}
 function fC(v){var n=parseFloat(v);if(isNaN(n)||n===0)return'\u2014';return new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR'}).format(n)}
 function render(o){
-var righe=o.righe||[];var gR=0;var rowsHtml='';
+var righe=o.righe||[];var gR=0;var rowsHtml='';var hasSconto=righe.some(function(r){return (r.sconto||0)>0});
 righe.forEach(function(r,i){
 var np=r.nr_persone||0,dp=r.dotazione||0,pp=r.prezzo_capo||0,cl=r.costo_lavaggio||0,cs=r.cambi_settimana||0,am=r.ammortamento_mesi||0,tr=r.trasporto||0,sc=r.sconto||0;
 var td=np*dp,cc=td*pp,ra=am>0?cc/am:0,rl=cl*td*cs*4.33,rm=(ra+rl+tr)*(1-sc/100);gR+=rm;
-rowsHtml+='<tr><td style="text-align:center">'+(i+1)+'</td><td>'+(r.descrizione||'')+'</td><td>'+(np||'')+'</td><td>'+(dp||'')+'</td><td>'+(td||'')+'</td><td>'+fC(pp)+'</td><td>'+(cl?fC(cl):'\u2014')+'</td><td>'+(cs||'')+'</td><td>'+(sc?sc+'%':'\u2014')+'</td><td style="font-weight:700">'+(rm?fC(rm):'\u2014')+'</td></tr>';
+rowsHtml+='<tr><td style="text-align:center">'+(i+1)+'</td><td>'+(r.descrizione||'')+'</td><td>'+(np||'')+'</td><td>'+(dp||'')+'</td><td>'+(td||'')+'</td><td>'+fC(pp)+'</td><td>'+(cl?fC(cl):'\u2014')+'</td><td>'+(cs||'')+'</td>'+(hasSconto?'<td>'+(sc?sc+'%':'\u2014')+'</td>':'')+'<td style="font-weight:700">'+(rm?fC(rm):'\u2014')+'</td></tr>';
 });
 var iva=parseFloat(o.iva)||22;
 var notesHtml='';var defaultNotes=['Indumenti confezionati con cuciture a barriera.','Servizio include lavaggio, sanificazione e ricondizionamento.','Consegna e ritiro presso la sede del cliente.','Tracciabilit\u00e0 RFID su ogni capo.','Certificazioni: ISO 14644 | EN 340 | IEC 61340.'];
@@ -106,7 +106,7 @@ document.getElementById('app').innerHTML='<div class="controls"><button class="b
 '<div class="meta-row"><div class="meta-item"><div class="label">DATA OFFERTA</div><div class="value">'+fD(o.data)+'</div></div><div class="meta-item"><div class="label">VALIDIT\u00c0</div><div class="value">'+fD(o.validita)+'</div></div><div class="meta-item"><div class="label">DURATA</div><div class="value">'+(o.durata||'')+'</div></div><div class="meta-item"><div class="label">PAGAMENTO</div><div class="value">'+(o.pagamento||'')+'</div></div></div>'+
 '<div class="two-cols"><div class="client-box"><div class="box-label">DESTINATARIO</div><div class="box-value">'+(o.cliente||'')+'</div><div class="box-sub">'+(o.tipo_servizio||'')+'</div></div>'+refHtml+'</div>'+
 (o.corpo?'<div class="section"><div class="dot"></div><span class="subject-label">OGGETTO</span><div class="subject-text">'+o.corpo+'</div></div>':'')+
-'<div class="section"><table><thead><tr><th>#</th><th>Descrizione</th><th>Pers.</th><th>Dot/p</th><th>Tot</th><th>Prezzo capo</th><th>Lav.\u20ac</th><th>C/sett</th><th>Sc%</th><th>RATA MESE</th></tr></thead><tbody>'+rowsHtml+'<tr class="total-row"><td colspan="8"></td><td>TOTALE</td><td>'+fC(gR)+'</td></tr></tbody></table></div>'+
+'<div class="section"><table><thead><tr><th>#</th><th>Descrizione</th><th>Pers.</th><th>Dot/p</th><th>Tot</th><th>Prezzo capo</th><th>Lav.\u20ac</th><th>C/sett</th>'+(hasSconto?'<th>Sc%</th>':'')+'<th>RATA MESE</th></tr></thead><tbody>'+rowsHtml+'<tr class="total-row"><td colspan="'+(hasSconto?8:7)+'"></td><td>TOTALE</td><td>'+fC(gR)+'</td></tr></tbody></table></div>'+
 '<div class="section"><div class="dot"></div><span class="section-title">RIEPILOGO SERVIZIO NOLEGGIO</span>'+sHtml+'</div>'+
 '<div class="totals"><div class="totals-line"><span class="lbl">Canone mensile</span><span>'+fC(gR)+'</span></div><div class="totals-line"><span class="lbl">IVA ('+iva+'%)</span><span>'+fC(gR*iva/100)+'</span></div><div class="grand-total"><div class="lbl">CANONE MENSILE TOTALE</div><div class="val">'+fC(gR*(1+iva/100))+'</div></div></div>'+
 '<div class="section"><div class="dot"></div><span class="section-title">NOTE E CONDIZIONI</span><ul class="notes">'+notesHtml+'</ul></div>'+
