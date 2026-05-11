@@ -11,6 +11,7 @@ body{font-family:Helvetica,Arial,sans-serif;color:#1B2A4A;font-size:9pt;backgrou
 .header{background:#D6246E;padding:14px 20mm;display:flex;align-items:center;justify-content:space-between}
 .header-left{display:flex;align-items:center;gap:14px}
 .logo-img{display:none}
+.logo-img2{width:48px;height:48px;border-radius:50%;flex-shrink:0}
 .logo-css{width:48px;height:48px;background:#D6246E;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .logo-css span{color:#fff;font-weight:900;font-size:22px;font-family:Helvetica,Arial,sans-serif}
 .company-name{color:#fff;font-size:18pt;font-weight:700}
@@ -101,7 +102,7 @@ refHtml='<div class="ref-box"><div class="box-label">REFERENTE COMMERCIALE</div>
 }
 document.getElementById('app').innerHTML='<div class="controls"><button class="btn" onclick="window.print()">\ud83d\udda8\ufe0f Stampa / Salva PDF</button><button class="btn btn2" onclick="window.print()">Ctrl+P</button></div>'+
 '<div class="page">'+
-'<div class="header"><div class="header-left"><div class="logo-css"><span>M:</span></div><div><div class="company-name">MYCROCLEAN</div><div class="company-sub">ITALIA\u00ae</div><div class="company-desc">Noleggio e lavaggio indumenti | Clean Room</div></div></div><div class="badge"><div class="badge-label">OFFERTA N\u00b0</div><div class="badge-num">'+(o.numero||'')+'</div></div></div>'+
+'<div class="header"><div class="header-left"><img class="logo-img2" src="'+LOGO+'"><div><div class="company-name">MYCROCLEAN</div><div class="company-sub">ITALIA\u00ae</div><div class="company-desc">Noleggio e lavaggio indumenti | Clean Room</div></div></div><div class="badge"><div class="badge-label">OFFERTA N\u00b0</div><div class="badge-num">'+(o.numero||'')+'</div></div></div>'+
 '<div class="meta-row"><div class="meta-item"><div class="label">DATA OFFERTA</div><div class="value">'+fD(o.data)+'</div></div><div class="meta-item"><div class="label">VALIDIT\u00c0</div><div class="value">'+fD(o.validita)+'</div></div><div class="meta-item"><div class="label">DURATA</div><div class="value">'+(o.durata||'')+'</div></div><div class="meta-item"><div class="label">PAGAMENTO</div><div class="value">'+(o.pagamento||'')+'</div></div></div>'+
 '<div class="two-cols"><div class="client-box"><div class="box-label">DESTINATARIO</div><div class="box-value">'+(o.cliente||'')+'</div><div class="box-sub">'+(o.tipo_servizio||'')+'</div></div>'+refHtml+'</div>'+
 (o.corpo?'<div class="section"><div class="dot"></div><span class="subject-label">OGGETTO</span><div class="subject-text">'+o.corpo+'</div></div>':'')+
