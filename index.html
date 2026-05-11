@@ -11,7 +11,7 @@ body{font-family:Helvetica,Arial,sans-serif;color:#1B2A4A;font-size:9pt;backgrou
 .header{background:#D6246E;padding:14px 20mm;display:flex;align-items:center;justify-content:space-between}
 .header-left{display:flex;align-items:center;gap:14px}
 .logo-img{display:none}
-.logo-img2{width:48px;height:48px;border-radius:50%;flex-shrink:0}
+.logo-img2{width:48px;height:48px;border-radius:50%;flex-shrink:0;background:#fff;padding:3px}
 .logo-css{width:48px;height:48px;background:#D6246E;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .logo-css span{color:#fff;font-weight:900;font-size:22px;font-family:Helvetica,Arial,sans-serif}
 .company-name{color:#fff;font-size:18pt;font-weight:700}
@@ -98,7 +98,7 @@ var sItems=[['N. Operatori',o.n_operatori||''],['Cambi settimanali/operatore',o.
 var sHtml='';sItems.forEach(function(it){sHtml+='<div class="summary-item"><span class="lbl">'+it[0]+'</span><span class="val">'+it[1]+'</span></div>'});
 var refHtml='';
 if(o.referente_nome){
-refHtml='<div class="ref-box"><div class="box-label">REFERENTE COMMERCIALE</div><div class="box-value">'+o.referente_nome+'</div>'+(o.referente_email?'<div class="box-sub">\u2709 '+o.referente_email+'</div>':'')+'<div class="box-line">\u260e '+(o.telefono?'\u260e '+o.telefono+'<br>':'')+'\u260e Cell: <span class="blank-field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div></div>';
+refHtml='<div class="ref-box"><div class="box-label">REFERENTE COMMERCIALE</div><div class="box-value">'+o.referente_nome+'</div>'+(o.referente_email?'<div class="box-sub">\u2709 '+o.referente_email+'</div>':'')+'<div class="box-line">\u260e '+(o.telefono?'\u260e '+o.telefono+'<br>':'')+' <span class="blank-field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div></div>';
 }
 document.getElementById('app').innerHTML='<div class="controls"><button class="btn" onclick="window.print()">\ud83d\udda8\ufe0f Stampa / Salva PDF</button><button class="btn btn2" onclick="window.print()">Ctrl+P</button></div>'+
 '<div class="page">'+
