@@ -83,6 +83,19 @@ else{render(offer)}
 function loadJ(){try{offer=JSON.parse(document.getElementById('ji').value);render(offer)}catch(e){alert('JSON non valido')}}
 function fD(d){if(!d)return'\u2014';try{return new Date(d).toLocaleDateString('it-IT',{day:'2-digit',month:'2-digit',year:'numeric'})}catch(e){return String(d)}}
 function fC(v){var n=parseFloat(v);if(isNaN(n)||n===0)return'\u2014';return new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR'}).format(n)}
+function formatPiede(txt){
+var lines=txt.split('\n');var out='';
+for(var i=0;i<lines.length;i++){
+var l=lines[i].trim();
+if(!l){out+='<div style="height:6px"></div>';continue}
+if(l.charAt(0)==='-'){
+out+='<div style="padding-left:14px;text-indent:-10px"><span style="color:#D6246E;font-weight:700;margin-right:4px">\u2022</span>'+l.substring(1).trim()+'</div>';
+}else if(l.indexOf(':')>0&&l.length<60&&i<3){
+out+='<div style="font-weight:700;color:#1B2A4A;margin-top:6px;font-size:8pt;border-bottom:1px solid #D0D8E0;padding-bottom:2px;margin-bottom:4px">'+l+'</div>';
+}else{
+out+='<div style="margin-bottom:2px">'+l+'</div>';
+}
+}return out}
 function render(o){
 var righe=o.righe||[];var gR=0;var rowsHtml='';var hasSconto=righe.some(function(r){return (r.sconto||0)>0});
 righe.forEach(function(r,i){
@@ -108,7 +121,7 @@ document.getElementById('app').innerHTML='<div class="controls"><button class="b
 (o.corpo?'<div class="section"><div class="dot"></div><span class="subject-label">OGGETTO</span><div class="subject-text">'+o.corpo+'</div></div>':'')+
 '<div class="section"><table><thead><tr><th>#</th><th>Descrizione</th><th>Pers.</th><th>Dot/p</th><th>Tot</th><th>Lav.\u20ac</th><th>C/sett</th>'+(hasSconto?'<th>Sc%</th>':'')+'<th>RATA SETT.</th></tr></thead><tbody>'+rowsHtml+'<tr class="total-row"><td colspan="'+(hasSconto?8:7)+'"></td><td>TOTALE</td><td>'+fC(gR)+'</td></tr></tbody></table></div>'+
 '<div class="section"><div class="dot"></div><span class="section-title">'+
-(o.piede?'</span><div style="font-size:8pt;line-height:1.5;margin-top:8px;white-space:pre-line;margin-bottom:12px">'+o.piede+'</div><div class="dot"></div><span class="section-title">':'')+'RIEPILOGO SERVIZIO NOLEGGIO</span>'+sHtml+'</div>'+
+(o.piede?'</span><div style="font-size:7.5pt;line-height:1.7;margin-top:8px;margin-bottom:12px">'+formatPiede(o.piede)+'</div><div class="dot"></div><span class="section-title">':'')+'RIEPILOGO SERVIZIO NOLEGGIO</span>'+sHtml+'</div>'+
 '<div class="totals"><div class="totals-line"><span class="lbl">Canone settimanale</span><span>'+fC(gR)+'</span></div><div class="totals-line"><span class="lbl">IVA ('+iva+'%)</span><span>'+fC(gR*iva/100)+'</span></div><div class="grand-total"><div class="lbl">CANONE SETTIMANALE TOTALE</div><div class="val">'+fC(gR*(1+iva/100))+'</div></div></div>'+
 '<div class="section"><div class="dot"></div><span class="section-title">NOTE E CONDIZIONI</span><ul class="notes">'+notesHtml+'</ul></div>'+
 '<div class="signatures"><div class="sig-box"><div class="lbl">Per accettazione del fornitore</div><div class="sig-line">Firma e timbro</div></div><div class="sig-box"><div class="lbl">Per accettazione del cliente</div><div class="sig-line">Firma e timbro</div></div></div>'+
