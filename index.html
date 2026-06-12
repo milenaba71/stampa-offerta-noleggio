@@ -36,7 +36,7 @@ body{font-family:Helvetica,Arial,sans-serif;color:#1B2A4A;font-size:9pt;backgrou
 .dot{display:inline-block;width:6px;height:6px;background:#D6246E;border-radius:50%;margin-right:6px;vertical-align:middle}
 .subject-label{font-size:7pt;color:#6B7B8D;text-transform:uppercase}
 .subject-text{font-size:8.5pt;line-height:1.5;margin-top:4px;white-space:pre-line}
-table{width:100%;border-collapse:collapse;margin-top:4px}
+table{width:100%;border-collapse:collapse;margin-top:4px;table-layout:fixed}
 thead th{background:#1B2A4A;color:#fff;font-size:6.5pt;padding:5px 6px;text-align:center;font-weight:700}
 thead th:nth-child(2){text-align:left}
 tbody td{padding:4px 6px;font-size:7.5pt;border-bottom:1px solid #D0D8E0;text-align:right}
@@ -107,7 +107,7 @@ var righe=o.righe||[];var gR=0;var rowsHtml='';var hasSconto=righe.some(function
 righe.forEach(function(r,i){
 var np=r.nr_persone||0,dp=r.dotazione||0,pp=r.prezzo_capo||0,cl=r.costo_lavaggio||0,cs=r.cambi_settimana||0,am=r.ammortamento_mesi||0,tr=r.trasporto||0,sc=r.sconto||0;
 var td=np*dp;var rm=r.rata_mensile||0;if(!rm){var cc=td*pp,ra=am>0?cc/am:0,rl=cl*td*cs*4.33;rm=(ra+rl+tr)*(1-sc/100)}gR+=rm;
-rowsHtml+='<tr><td style="text-align:center">'+(i+1)+'</td><td>'+(r.descrizione||'')+'</td><td>'+(np||'')+'</td><td>'+(dp||'')+'</td><td>'+(td||'')+'</td><td>'+(cs||'')+'</td>'+(hasSconto?'<td>'+(sc?sc+'%':'\u2014')+'</td>':'')+'<td style="font-weight:700">'+(rm?fC(rm):'\u2014')+'</td></tr>';
+rowsHtml+='<tr><td style="text-align:center">'+(i+1)+'</td><td style="word-wrap:break-word;overflow-wrap:break-word">'+(r.descrizione||'')+'</td><td style="text-align:center">'+(np||'')+'</td><td style="text-align:center">'+(dp||'')+'</td><td style="text-align:center">'+(td||'')+'</td><td style="text-align:center">'+(cs||'')+'</td>'+(hasSconto?'<td>'+(sc?sc+'%':'\u2014')+'</td>':'')+'<td style="font-weight:700">'+(rm?fC(rm):'\u2014')+'</td></tr>';
 });
 var iva=parseFloat(o.iva)||22;
 var notesHtml='';var defaultNotes=['Indumenti confezionati con cuciture a barriera.','Servizio include lavaggio, sanificazione e ricondizionamento.','Consegna e ritiro presso la sede del cliente.','Tracciabilit\u00e0 RFID su ogni capo.','Certificazioni: ISO 14644 | EN 340 | IEC 61340.'];
@@ -125,7 +125,7 @@ document.getElementById('app').innerHTML='<div class="controls"><button class="b
 '<div class="meta-row"><div class="meta-item"><div class="label">DATA OFFERTA</div><div class="value">'+fD(o.data)+'</div></div><div class="meta-item"><div class="label">VALIDIT\u00c0</div><div class="value">'+fD(o.validita)+'</div></div><div class="meta-item"><div class="label">DURATA</div><div class="value">'+(o.durata||'')+'</div></div><div class="meta-item"><div class="label">PAGAMENTO</div><div class="value">'+(o.pagamento||'')+'</div></div></div>'+
 '<div class="two-cols"><div class="client-box"><div class="box-label">DESTINATARIO</div><div class="box-value">'+(o.cliente||'')+'</div><div class="box-sub">'+(o.tipo_servizio||'')+'</div></div>'+refHtml+'</div>'+
 (o.corpo?'<div class="section"><div class="dot"></div><span class="subject-label">OGGETTO</span><div class="subject-text">'+o.corpo+'</div></div>':'')+
-'<div class="section"><table><thead><tr><th>#</th><th>Descrizione</th><th>Nr.<br>Persone</th><th>Dotazione<br>a persona</th><th>Tot.<br>Dotazione</th><th>Cambi<br>Settimana</th>'+(hasSconto?'<th>Sconto<br>%</th>':'')+'<th>RATA<br>SETTIMANALE</th></tr></thead><tbody>'+rowsHtml+'<tr class="total-row"><td colspan="'+(hasSconto?8:7)+'"></td><td>TOTALE</td><td>'+fC(gR)+'</td></tr></tbody></table></div>'+
+'<div class="section"><table><thead><tr><th style="width:4%">#</th><th style="width:38%">Descrizione</th><th style="width:8%;text-align:center">Nr.<br>Persone</th><th style="width:10%;text-align:center">Dotazione<br>x Persona</th><th style="width:8%;text-align:center">Tot.<br>Dotazione</th><th style="width:8%;text-align:center">Cambi<br>Settimana</th>'+(hasSconto?'<th style="width:7%;text-align:center">Sconto<br>%</th>':'')+'<th style="width:12%;text-align:right">RATA<br>SETTIMANALE</th></tr></thead><tbody>'+rowsHtml+'<tr class="total-row"><td colspan="'+(hasSconto?8:7)+'"></td><td>TOTALE</td><td>'+fC(gR)+'</td></tr></tbody></table></div>'+
 '<div class="section"><div class="dot"></div><span class="section-title">'+
 (o.piede?'</span><div style="font-size:7.5pt;line-height:1.7;margin-top:8px;margin-bottom:12px">'+formatPiede(o.piede)+'</div><div class="dot"></div><span class="section-title">':'')+'RIEPILOGO SERVIZIO NOLEGGIO</span>'+sHtml+'</div>'+
 '<div class="totals"><div class="totals-line"><span class="lbl">Canone settimanale</span><span>'+fC(gR)+'</span></div><div class="totals-line"><span class="lbl">IVA ('+iva+'%)</span><span>'+fC(gR*iva/100)+'</span></div><div class="grand-total"><div class="lbl">CANONE SETTIMANALE TOTALE</div><div class="val">'+fC(gR*(1+iva/100))+'</div></div></div>'+
