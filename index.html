@@ -84,24 +84,30 @@ function loadJ(){try{offer=JSON.parse(document.getElementById('ji').value);rende
 function fD(d){if(!d)return'\u2014';try{return new Date(d).toLocaleDateString('it-IT',{day:'2-digit',month:'2-digit',year:'numeric'})}catch(e){return String(d)}}
 function fC(v){var n=parseFloat(v);if(isNaN(n)||n===0)return'\u2014';return new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR'}).format(n)}
 function formatPiede(txt){
-var lines=txt.split('\n');var out='';
+var lines=txt.split('\n');var out='';var inList=false;
 for(var i=0;i<lines.length;i++){
 var l=lines[i].trim();
-if(!l){out+='<div style="height:6px"></div>';continue}
-if(l.charAt(0)==='-'){
-out+='<div style="padding-left:14px;text-indent:-10px"><span style="color:#D6246E;font-weight:700;margin-right:4px">\u2022</span>'+l.substring(1).trim()+'</div>';
-}else if(l.indexOf(':')>0&&l.length<60&&i<3){
-out+='<div style="font-weight:700;color:#1B2A4A;margin-top:6px;font-size:8pt;border-bottom:1px solid #D0D8E0;padding-bottom:2px;margin-bottom:4px">'+l+'</div>';
+if(!l){if(inList){out+='</div>';inList=false}out+='<div style="height:8px"></div>';continue}
+var isBullet=l.charAt(0)==='-';
+if(isBullet&&!inList){out+='<div style="margin:4px 0;padding:6px 10px;background:#F8F4FA;border-radius:4px;border-left:2px solid #D6246E">';inList=true}
+if(!isBullet&&inList){out+='</div>';inList=false}
+if(isBullet){
+out+='<div style="padding-left:12px;text-indent:-10px;margin:2px 0;font-size:7.5pt;line-height:1.6"><span style="color:#D6246E;font-weight:700">\u2022 </span>'+l.substring(1).trim()+'</div>';
+}else if(l.indexOf('Fascia')===0||l.indexOf('Oltre')===0){
+if(!inList){out+='<div style="margin:4px 0;padding:6px 10px;background:#F8F4FA;border-radius:4px;border-left:2px solid #D6246E">';inList=true}
+out+='<div style="padding-left:12px;text-indent:-10px;margin:2px 0;font-size:7.5pt;line-height:1.6"><span style="color:#D6246E;font-weight:700">\u2022 </span>'+l+'</div>';
+}else if(l.indexOf(':')>0&&l.length<80&&(l.indexOf('Escluse')>=0||l.indexOf('tabella')>=0||l.indexOf('Tabella')>=0||l.indexOf('standard')>=0)){
+out+='<div style="font-weight:700;color:#1B2A4A;margin-top:8px;font-size:8pt;border-bottom:1px solid #D6246E;padding-bottom:3px;margin-bottom:4px">'+l+'</div>';
 }else{
-out+='<div style="margin-bottom:2px">'+l+'</div>';
+out+='<div style="margin:3px 0;font-size:7.5pt;line-height:1.6">'+l+'</div>';
 }
-}return out}
+}if(inList)out+='</div>';return out}
 function render(o){
 var righe=o.righe||[];var gR=0;var rowsHtml='';var hasSconto=righe.some(function(r){return (r.sconto||0)>0});
 righe.forEach(function(r,i){
 var np=r.nr_persone||0,dp=r.dotazione||0,pp=r.prezzo_capo||0,cl=r.costo_lavaggio||0,cs=r.cambi_settimana||0,am=r.ammortamento_mesi||0,tr=r.trasporto||0,sc=r.sconto||0;
 var td=np*dp;var rm=r.rata_mensile||0;if(!rm){var cc=td*pp,ra=am>0?cc/am:0,rl=cl*td*cs*4.33;rm=(ra+rl+tr)*(1-sc/100)}gR+=rm;
-rowsHtml+='<tr><td style="text-align:center">'+(i+1)+'</td><td>'+(r.descrizione||'')+'</td><td>'+(np||'')+'</td><td>'+(dp||'')+'</td><td>'+(td||'')+'</td><td>'+(cl?fC(cl):'\u2014')+'</td><td>'+(cs||'')+'</td>'+(hasSconto?'<td>'+(sc?sc+'%':'\u2014')+'</td>':'')+'<td style="font-weight:700">'+(rm?fC(rm):'\u2014')+'</td></tr>';
+rowsHtml+='<tr><td style="text-align:center">'+(i+1)+'</td><td>'+(r.descrizione||'')+'</td><td>'+(np||'')+'</td><td>'+(dp||'')+'</td><td>'+(td||'')+'</td><td>'+(cs||'')+'</td>'+(hasSconto?'<td>'+(sc?sc+'%':'\u2014')+'</td>':'')+'<td style="font-weight:700">'+(rm?fC(rm):'\u2014')+'</td></tr>';
 });
 var iva=parseFloat(o.iva)||22;
 var notesHtml='';var defaultNotes=['Indumenti confezionati con cuciture a barriera.','Servizio include lavaggio, sanificazione e ricondizionamento.','Consegna e ritiro presso la sede del cliente.','Tracciabilit\u00e0 RFID su ogni capo.','Certificazioni: ISO 14644 | EN 340 | IEC 61340.'];
@@ -119,7 +125,7 @@ document.getElementById('app').innerHTML='<div class="controls"><button class="b
 '<div class="meta-row"><div class="meta-item"><div class="label">DATA OFFERTA</div><div class="value">'+fD(o.data)+'</div></div><div class="meta-item"><div class="label">VALIDIT\u00c0</div><div class="value">'+fD(o.validita)+'</div></div><div class="meta-item"><div class="label">DURATA</div><div class="value">'+(o.durata||'')+'</div></div><div class="meta-item"><div class="label">PAGAMENTO</div><div class="value">'+(o.pagamento||'')+'</div></div></div>'+
 '<div class="two-cols"><div class="client-box"><div class="box-label">DESTINATARIO</div><div class="box-value">'+(o.cliente||'')+'</div><div class="box-sub">'+(o.tipo_servizio||'')+'</div></div>'+refHtml+'</div>'+
 (o.corpo?'<div class="section"><div class="dot"></div><span class="subject-label">OGGETTO</span><div class="subject-text">'+o.corpo+'</div></div>':'')+
-'<div class="section"><table><thead><tr><th>#</th><th>Descrizione</th><th>Pers.</th><th>Dot/p</th><th>Tot</th><th>Lav.\u20ac</th><th>C/sett</th>'+(hasSconto?'<th>Sc%</th>':'')+'<th>RATA SETT.</th></tr></thead><tbody>'+rowsHtml+'<tr class="total-row"><td colspan="'+(hasSconto?8:7)+'"></td><td>TOTALE</td><td>'+fC(gR)+'</td></tr></tbody></table></div>'+
+'<div class="section"><table><thead><tr><th>#</th><th>Descrizione</th><th>Nr.<br>Persone</th><th>Dotazione<br>a persona</th><th>Tot.<br>Dotazione</th><th>Cambi<br>Settimana</th>'+(hasSconto?'<th>Sconto<br>%</th>':'')+'<th>RATA<br>SETTIMANALE</th></tr></thead><tbody>'+rowsHtml+'<tr class="total-row"><td colspan="'+(hasSconto?8:7)+'"></td><td>TOTALE</td><td>'+fC(gR)+'</td></tr></tbody></table></div>'+
 '<div class="section"><div class="dot"></div><span class="section-title">'+
 (o.piede?'</span><div style="font-size:7.5pt;line-height:1.7;margin-top:8px;margin-bottom:12px">'+formatPiede(o.piede)+'</div><div class="dot"></div><span class="section-title">':'')+'RIEPILOGO SERVIZIO NOLEGGIO</span>'+sHtml+'</div>'+
 '<div class="totals"><div class="totals-line"><span class="lbl">Canone settimanale</span><span>'+fC(gR)+'</span></div><div class="totals-line"><span class="lbl">IVA ('+iva+'%)</span><span>'+fC(gR*iva/100)+'</span></div><div class="grand-total"><div class="lbl">CANONE SETTIMANALE TOTALE</div><div class="val">'+fC(gR*(1+iva/100))+'</div></div></div>'+
